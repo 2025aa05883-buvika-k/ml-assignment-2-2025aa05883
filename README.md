@@ -14,10 +14,11 @@ The objective of this project is to predict **player engagement levels** (`High`
 ## 📊 Dataset Description
 - **Source**: *Predict Online Gaming Behavior Dataset* by Rabie El Kharoua (Kaggle, CC BY 4.0 license)  
 - **Instances**: ~40,000 rows  
-- **Predictive Features**: 12+ (excluding `PlayerID`, which is used only as an identifier)  
+- **Predictive Features**: 12 (excluding `PlayerID`, which is used only as an identifier)  
 - **Target Variable**: `EngagementLevel` (`High`, `Medium`, `Low`)  
 
 ### Feature Overview
+- PlayerID (identifier, excluded from training)  
 - Age  
 - Gender  
 - Location  
@@ -29,9 +30,10 @@ The objective of this project is to predict **player engagement levels** (`High`
 - AvgSessionDurationMinutes  
 - PlayerLevel  
 - AchievementsUnlocked  
-- *(Engineered Feature)* TotalPlayTimePerWeek  
 
-The dataset is suitable for **multi-class classification** and contains a mix of numerical and categorical features. Categorical variables were encoded appropriately, and feature engineering was applied consistently across training and inference pipelines.
+*Additional features may be engineered during preprocessing to better capture player activity and engagement patterns. Any such features are applied consistently across training and inference pipelines.*
+
+The dataset is suitable for **multi-class classification** and contains a mix of numerical and categorical variables. Appropriate encoding and preprocessing techniques are applied before model training.
 
 ---
 
@@ -58,7 +60,7 @@ The following six classification models were implemented on the same dataset:
 | Random Forest       |          |     |           |        |          |     |
 | XGBoost             |          |     |           |        |          |     |
 
-**Note:** For multi-class classification, AUC was computed using a **One-vs-Rest (OvR)** strategy with **macro-averaging** to ensure fair evaluation across all classes.
+**Note:** For multi-class classification, AUC is computed using a **One-vs-Rest (OvR)** strategy with **macro-averaging** to ensure fair evaluation across all classes.
 
 ---
 
@@ -73,17 +75,17 @@ The following six classification models were implemented on the same dataset:
 | Random Forest       |             |
 | XGBoost             |             |
 
-*(Observations will be added after evaluating all models, focusing on performance differences, class-wise behavior, and robustness.)*
+*Observations are added after evaluating all models, focusing on comparative performance, robustness, and class-wise behavior.*
 
 ---
 
 ## 🚀 Streamlit Application
-An interactive **Streamlit web application** was developed and deployed using **Streamlit Community Cloud** with the following features:
+An interactive **Streamlit web application** is developed and deployed using **Streamlit Community Cloud** with the following features:
 
 - CSV dataset upload (test data only)  
 - Model selection dropdown  
 - Display of evaluation metrics  
-- Confusion matrix / classification report visualization  
+- Confusion matrix or classification report visualization  
 
 🔗 **Live Streamlit App**: *[Link to be added]*  
 🔗 **GitHub Repository**: *[Link to be added]*  
