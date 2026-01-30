@@ -85,7 +85,7 @@ An interactive **Streamlit web application** was developed and deployed using **
 - Confusion matrix and classification report  
 
 🔗 **Live Streamlit App**: *(Add deployed app link)*  
-🔗 **GitHub Repository**: *[(ml-assignment-2-2025aa05883)* ](https://github.com/2025aa05883-buvika-k/ml-assignment-2-2025aa05883) 
+🔗 **GitHub Repository**: [(ml-assignment-2-2025aa05883)](https://github.com/2025aa05883-buvika-k/ml-assignment-2-2025aa05883) 
 
 ---
 
