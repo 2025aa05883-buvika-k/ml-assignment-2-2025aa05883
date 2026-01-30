@@ -7,18 +7,18 @@ End-to-end machine learning classification project implementing multiple models 
 ## 🎮 Player Engagement Prediction
 
 ## 📌 Problem Statement
-The objective of this project is to predict **player engagement levels** (`High`, `Medium`, `Low`) in online gaming environments using demographic and gameplay-related features. By applying multiple machine learning classification models, this project aims to analyze factors influencing player engagement and compare model performance using standard evaluation metrics.
+The objective of this project is to predict **player engagement levels** (`High`, `Medium`, `Low`) in online gaming environments using demographic and gameplay-related features. Accurate engagement prediction enables better understanding of player behavior and supports data-driven decisions for improving player retention and game design.
 
 ---
 
 ## 📊 Dataset Description
-- **Source**: *Predict Online Gaming Behavior Dataset* by Rabie El Kharoua (Kaggle, CC BY 4.0 license)  
-- **Instances**: ~40,000 rows  
-- **Predictive Features**: 12 (excluding `PlayerID`, which is used only as an identifier)  
+- **Dataset Name**: Predict Online Gaming Behavior Dataset  
+- **Source**: Kaggle (Rabie El Kharoua, CC BY 4.0 License)  
+- **Number of Instances**: 40,034  
+- **Number of Features**: 12 (excluding `PlayerID`)  
 - **Target Variable**: `EngagementLevel` (`High`, `Medium`, `Low`)  
 
-### Feature Overview
-- PlayerID (identifier, excluded from training)  
+### Features Used
 - Age  
 - Gender  
 - Location  
@@ -31,9 +31,7 @@ The objective of this project is to predict **player engagement levels** (`High`
 - PlayerLevel  
 - AchievementsUnlocked  
 
-*Additional features may be engineered during preprocessing to better capture player activity and engagement patterns. Any such features are applied consistently across training and inference pipelines.*
-
-The dataset is suitable for **multi-class classification** and contains a mix of numerical and categorical variables. Appropriate encoding and preprocessing techniques are applied before model training.
+The dataset contains both numerical and categorical features and is suitable for **multi-class classification**. Feature engineering, encoding, scaling, and preprocessing steps were applied uniformly across all models.
 
 ---
 
@@ -42,8 +40,8 @@ The following six classification models were implemented on the same dataset:
 
 1. Logistic Regression  
 2. Decision Tree Classifier  
-3. K-Nearest Neighbors (kNN) Classifier  
-4. Naive Bayes Classifier (Gaussian)  
+3. K-Nearest Neighbors (kNN)  
+4. Naive Bayes (Gaussian)  
 5. Random Forest (Ensemble)  
 6. XGBoost (Ensemble)  
 
@@ -51,16 +49,17 @@ The following six classification models were implemented on the same dataset:
 
 ## 📈 Comparison of Evaluation Metrics
 
-| ML Model Name        | Accuracy | AUC | Precision | Recall | F1 Score | MCC |
-|---------------------|----------|-----|-----------|--------|----------|-----|
-| Logistic Regression |          |     |           |        |          |     |
-| Decision Tree       |          |     |           |        |          |     |
-| kNN                 |          |     |           |        |          |     |
-| Naive Bayes         |          |     |           |        |          |     |
-| Random Forest       |          |     |           |        |          |     |
-| XGBoost             |          |     |           |        |          |     |
+| ML Model Name        | Accuracy | AUC  | Precision | Recall | F1 Score | MCC |
+|---------------------|----------|------|-----------|--------|----------|-----|
+| Logistic Regression | 0.8951 | 0.9422 | 0.8897 | 0.8948 | 0.8919 | 0.8351 |
+| Decision Tree       | 0.8529 | 0.8842 | 0.8444 | 0.8455 | 0.8449 | 0.7677 |
+| kNN                 | 0.8497 | 0.9268 | 0.8514 | 0.8401 | 0.8453 | 0.7610 |
+| Naive Bayes         | 0.7890 | 0.9177 | 0.7825 | 0.8105 | 0.7903 | 0.6828 |
+| Random Forest       | 0.9288 | 0.9431 | 0.9283 | 0.9211 | 0.9246 | 0.8872 |
+| XGBoost             | 0.9303 | 0.9414 | 0.9302 | 0.9223 | 0.9261 | 0.8895 |
 
-**Note:** For multi-class classification, AUC is computed using a **One-vs-Rest (OvR)** strategy with **macro-averaging** to ensure fair evaluation across all classes.
+**Note:**  
+AUC scores are computed using **One-vs-Rest (OvR)** strategy with **macro-averaging** for multi-class classification.
 
 ---
 
@@ -68,32 +67,33 @@ The following six classification models were implemented on the same dataset:
 
 | ML Model Name        | Observation |
 |---------------------|-------------|
-| Logistic Regression |             |
-| Decision Tree       |             |
-| kNN                 |             |
-| Naive Bayes         |             |
-| Random Forest       |             |
-| XGBoost             |             |
-
-*Observations are added after evaluating all models, focusing on comparative performance, robustness, and class-wise behavior.*
+| Logistic Regression | Achieved strong performance due to effective feature engineering and scaling, showing good generalization on unseen data. |
+| Decision Tree       | Performed reasonably well but showed reduced generalization compared to ensemble models. |
+| kNN                 | Delivered stable results but was affected by high dimensionality after feature expansion. |
+| Naive Bayes         | Fast and simple model, but lower performance due to independence assumptions not fully holding. |
+| Random Forest       | Demonstrated excellent accuracy and robustness by aggregating multiple decision trees. |
+| XGBoost             | Achieved the best overall performance by capturing complex non-linear feature interactions. |
 
 ---
 
 ## 🚀 Streamlit Application
-An interactive **Streamlit web application** is developed and deployed using **Streamlit Community Cloud** with the following features:
+An interactive **Streamlit web application** was developed and deployed using **Streamlit Community Cloud** with the following features:
 
-- CSV dataset upload (test data only)  
+- Upload CSV test dataset  
 - Model selection dropdown  
 - Display of evaluation metrics  
-- Confusion matrix or classification report visualization  
+- Confusion matrix and classification report  
 
-🔗 **Live Streamlit App**: *[Link to be added]*  
-🔗 **GitHub Repository**: *[Link to be added]*  
+🔗 **Live Streamlit App**: *(Add deployed app link)*  
+🔗 **GitHub Repository**: *(Add repository link)*  
 
 ---
 
 ## ⚙️ How to Run the Project
-1. Clone the GitHub repository  
-2. Install dependencies using:
+1. Clone the repository  
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
+3. Run the Streamlit app:
+   ```bash
+   streamlit run app.py
