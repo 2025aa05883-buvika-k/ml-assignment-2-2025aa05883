@@ -12,9 +12,7 @@ from sklearn.metrics import (
     f1_score, matthews_corrcoef, roc_auc_score
 )
 
-# --------------------------------------------------
 # Load models
-# --------------------------------------------------
 
 # Load XGBoost bundle (model + label encoder)
 xgb_bundle = joblib.load("model/xgb_model.pkl")
@@ -30,9 +28,7 @@ models = {
     "XGBoost": xgb_model
 }
 
-# --------------------------------------------------
 # Streamlit UI
-# --------------------------------------------------
 
 st.title("Player Engagement Prediction – ML Assignment 2")
 st.info("Upload the test dataset CSV containing the 'EngagementLevel' column.")
@@ -58,9 +54,7 @@ if uploaded_file:
     )
     model = models[model_choice]
 
-    # --------------------------------------------------
     # Predictions
-    # --------------------------------------------------
 
     y_pred = model.predict(X_test)
 
@@ -68,16 +62,12 @@ if uploaded_file:
     if model_choice == "XGBoost":
         y_pred = xgb_le.inverse_transform(y_pred)
 
-    # --------------------------------------------------
     # Classification Report
-    # --------------------------------------------------
 
     st.subheader("Classification Report")
     st.text(classification_report(y_test, y_pred))
 
-    # --------------------------------------------------
     # Evaluation Metrics
-    # --------------------------------------------------
 
     acc = accuracy_score(y_test, y_pred)
     prec = precision_score(y_test, y_pred, average="macro", zero_division=0)
@@ -115,9 +105,7 @@ if uploaded_file:
         "AUC (OvR, Macro)": [auc]
     })
 
-    # --------------------------------------------------
     # Confusion Matrix
-    # --------------------------------------------------
 
     st.subheader("Confusion Matrix")
     labels = sorted(y_test.unique())
@@ -137,9 +125,7 @@ if uploaded_file:
     ax.set_ylabel("Actual")
     st.pyplot(fig)
 
-    # --------------------------------------------------
     # Sample Predictions
-    # --------------------------------------------------
 
     st.subheader("Sample Predictions")
     results_df = pd.DataFrame({
