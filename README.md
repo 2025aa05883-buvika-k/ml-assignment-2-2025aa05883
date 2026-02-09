@@ -15,10 +15,11 @@ The objective of this project is to predict **player engagement levels** (`High`
 - **Dataset Name**: Predict Online Gaming Behavior Dataset  
 - **Source**: Kaggle (Rabie El Kharoua, CC BY 4.0 License)  
 - **Number of Instances**: 40,034  
-- **Number of Features**: 12 (excluding `PlayerID`)  
+- **Number of Features**: 12 (including `PlayerID`)  
 - **Target Variable**: `EngagementLevel` (`High`, `Medium`, `Low`)  
 
 ### Features Used
+- PlayerID  
 - Age  
 - Gender  
 - Location  
@@ -34,9 +35,11 @@ The objective of this project is to predict **player engagement levels** (`High`
 The dataset contains both numerical and categorical features and is suitable for **multi-class classification**.
 
 ### Preprocessing and Feature Engineering
+- Removal of `PlayerID` during preprocessing, as it is a unique identifier and does not contribute predictive information  
 - Encoding of categorical variables  
 - Scaling of numerical features where required  
 - Creation of derived features based on gameplay patterns to support improved model learning  
+
 
 All preprocessing and feature engineering steps were applied **consistently across all models**.
 
@@ -72,8 +75,8 @@ AUC scores are computed using the **One-vs-Rest (OvR)** strategy with **macro-av
 
 ## 🔍 Observations on Model Performance
 
-| ML Model Name        | Observation about model performance|
-|---------------------|-------------|
+| ML Model Name        | Observation about model performance |
+|---------------------|-------------------------------------|
 | Logistic Regression | Achieved strong performance due to effective feature engineering and scaling, showing good generalization on unseen data. |
 | Decision Tree       | Performed reasonably well but showed reduced generalization compared to ensemble models. |
 | kNN                 | Delivered stable results but was affected by high dimensionality after feature expansion. |
@@ -106,6 +109,6 @@ https://github.com/2025aa05883-buvika-k/ml-assignment-2-2025aa05883
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
-3. Run the Streamlit application:
+Run the Streamlit application:
    ```bash
    streamlit run app.py
