@@ -3,25 +3,158 @@ import pandas as pd
 import joblib
 import seaborn as sns
 import matplotlib.pyplot as plt
-from feature_engineer import FeatureEngineer
 
+from feature_engineer import FeatureEngineer
 from sklearn.metrics import (
-    classification_report, confusion_matrix,
+    confusion_matrix,
     accuracy_score, precision_score, recall_score,
     f1_score, matthews_corrcoef, roc_auc_score
 )
 
-# -----------------------------
-# Page Config
-# -----------------------------
+# =============================
+# PAGE CONFIG (MUST BE FIRST)
+# =============================
 st.set_page_config(
     page_title="Player Engagement Prediction",
     layout="wide"
 )
 
-# -----------------------------
-# Load Models
-# -----------------------------
+# =============================
+# 🌸 GLOBAL PINK THEME CSS
+# =============================
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+html, body, [class*="css"], div, span, p, h1, h2, h3, label, input, select, textarea {
+    font-family: 'Poppins', 'Segoe UI Emoji', sans-serif !important;
+}
+
+.stApp {
+    background: linear-gradient(180deg, #fff5fa 0%, #fde8f1 100%);
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(135deg, #f3a6c8, #c86b98);
+    padding: 2.6rem;
+    border-radius: 28px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.hero h1 {
+    color: white;
+    font-size: 3.2rem;
+    font-weight: 800;
+}
+.hero p {
+    color: #fff0f7;
+    font-size: 1.15rem;
+}
+
+/* PROBLEM CARD */
+.problem-box {
+    background: #fff0f7;
+    padding: 1.6rem;
+    border-radius: 22px;
+    border-left: 6px solid #e75480;
+}
+
+/* HEADERS */
+h2, h3 {
+    color: #7a1f4c;
+    font-weight: 700;
+}
+
+/* FILE UPLOADER */
+[data-testid="stFileUploader"] {
+    background: #ffe6f0 !important;
+    padding: 2rem !important;
+    border-radius: 22px !important;
+    border: 2px dashed #e75480 !important;
+}
+
+/* DROPDOWN */
+select {
+    background: #ffe6f0 !important;
+    border-radius: 14px !important;
+    border: 1px solid #e75480 !important;
+    padding: 0.5rem !important;
+}
+
+/* BUTTONS */
+button {
+    background: linear-gradient(135deg, #f3a6c8, #c86b98) !important;
+    color: white !important;
+    border-radius: 14px !important;
+    font-weight: 600 !important;
+    border: none !important;
+}
+button:hover {
+    transform: translateY(-2px);
+}
+
+/* METRIC CARDS */
+[data-testid="stMetric"] {
+    background: #fff0f7;
+    padding: 1.4rem;
+    border-radius: 20px;
+    box-shadow: 0 6px 18px rgba(231,84,128,0.18);
+    transition: all 0.25s ease;
+}
+[data-testid="stMetric"]:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(231,84,128,0.32);
+}
+[data-testid="stMetricValue"] {
+    color: #7a1f4c;
+    font-size: 1.7rem;
+}
+
+/* TABLE */
+thead tr th {
+    background-color: #e75480 !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+tbody tr:nth-child(even) {
+    background-color: #fff5fa;
+}
+
+/* SECTION TITLE */
+.section-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #7a1f4c;
+    margin-top: 1rem;
+}
+</style>
+            
+<style>
+
+/* 🌸 Sample Predictions table header */
+.sample-table thead tr th {
+    background-color: #e75480 !important;
+    color: white !important;
+    font-weight: 600 !important;
+}
+
+/* ✅ Correct prediction row */
+.correct-row {
+    background-color: #e6f4ea !important;
+}
+
+/* ❌ Wrong prediction row */
+.wrong-row {
+    background-color: #fde2ea !important;
+}
+
+</style>            
+""", unsafe_allow_html=True)
+
+# =============================
+# LOAD MODELS
+# =============================
 xgb_bundle = joblib.load("model/xgb_model.pkl")
 xgb_model = xgb_bundle["model"]
 xgb_le = xgb_bundle["label_encoder"]
@@ -35,60 +168,62 @@ models = {
     "XGBoost (Ensemble)": xgb_model
 }
 
-# -----------------------------
-# Utility: Load sample test data from repo
-# -----------------------------
+# =============================
+# SAMPLE TEST DATA
+# =============================
 SAMPLE_TEST_PATH = "data/test.csv"
 
 @st.cache_data
 def load_sample_test_data():
     return pd.read_csv(SAMPLE_TEST_PATH)
 
-# -----------------------------
-# Title & Problem Statement
-# -----------------------------
-st.title("🎮 Player Engagement Prediction")
-st.markdown(
-    """
-    **Problem Statement:**  
-    The objective of this project is to predict player engagement levels using
-    multiple machine learning classification models. The application allows
-    users to upload test data, select a trained model, and evaluate performance
-    using standard classification metrics.
-    """
-)
+# =============================
+# HERO SECTION
+# =============================
+st.markdown("""
+<div class="hero">
+    <h1>🎮 Player Engagement Prediction</h1>
+    <p>Multi-model machine learning evaluation with interactive visual analytics</p>
+</div>
+""", unsafe_allow_html=True)
 
-st.divider()
+# =============================
+# PROBLEM STATEMENT
+# =============================
+st.markdown("""
+<div class="problem-box">
+<b>Problem Statement</b><br><br>
+The objective of this project is to predict <b>player engagement levels</b>
+(<i>High, Medium, Low</i>) using gameplay and demographic features.
+The application allows users to upload test data, select a trained
+classification model, and evaluate performance using standard multi-class
+metrics.
+</div>
+""", unsafe_allow_html=True)
 
-# -----------------------------
-# Sample Test Data Download
-# -----------------------------
-st.subheader("📥 Sample Test Dataset")
+# =============================
+# SAMPLE DATA DOWNLOAD
+# =============================
+st.markdown('<div class="section-title">📥 Sample Test Dataset</div>', unsafe_allow_html=True)
 
 try:
     sample_df = load_sample_test_data()
-
     st.download_button(
-        label="Download Sample Test CSV",
+        "Download Sample Test CSV",
         data=sample_df.to_csv(index=False),
         file_name="sample_test_data.csv",
         mime="text/csv"
     )
+except:
+    st.warning("Sample test dataset not found in repository.")
 
-    st.caption("Sample test dataset provided from the project repository.")
-
-except Exception:
-    st.warning("Sample test dataset not found in the repository.")
-
-st.divider()
-
-# -----------------------------
-# Dataset Upload
-# -----------------------------
-st.subheader("📂 Upload Test Dataset")
+# =============================
+# UPLOAD DATA
+# =============================
+st.markdown('<div class="section-title">📂 Upload Test Dataset</div>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
-    "Upload TEST dataset (CSV with 'EngagementLevel' column)",
+    "Upload CSV file (must include `EngagementLevel`)",
     type="csv"
 )
 
@@ -96,41 +231,30 @@ if uploaded_file:
     test_data = pd.read_csv(uploaded_file)
 
     if "EngagementLevel" not in test_data.columns:
-        st.error("CSV must include 'EngagementLevel' column for evaluation.")
+        st.error("CSV must include 'EngagementLevel' column.")
         st.stop()
 
-    X_test = test_data.drop(columns=["EngagementLevel"])
+    X_test = FeatureEngineer().transform(
+        test_data.drop(columns=["EngagementLevel"])
+    )
     y_test = test_data["EngagementLevel"]
 
-    # Feature Engineering
-    fe = FeatureEngineer()
-    X_test = fe.transform(X_test)
-
-    st.divider()
-
-    # -----------------------------
-    # Model Selection
-    # -----------------------------
-    st.subheader("🤖 Model Selection")
-    model_choice = st.selectbox(
-        "Select a classification model",
-        list(models.keys())
-    )
+    # =============================
+    # MODEL SELECTION
+    # =============================
+    st.markdown('<div class="section-title">🤖 Model Selection</div>', unsafe_allow_html=True)
+    model_choice = st.selectbox("Choose a model", list(models.keys()))
     model = models[model_choice]
 
-    # -----------------------------
-    # Predictions
-    # -----------------------------
-    with st.spinner("Evaluating model..."):
+    with st.spinner("✨ Evaluating model..."):
         y_pred = model.predict(X_test)
-
         if model_choice.startswith("XGBoost"):
             y_pred = xgb_le.inverse_transform(y_pred)
 
-    # -----------------------------
-    # Metrics
-    # -----------------------------
-    st.subheader("📊 Evaluation Metrics")
+    # =============================
+    # METRICS
+    # =============================
+    st.markdown('<div class="section-title">📊 Evaluation Metrics</div>', unsafe_allow_html=True)
 
     acc = accuracy_score(y_test, y_pred)
     prec = precision_score(y_test, y_pred, average="macro", zero_division=0)
@@ -142,27 +266,31 @@ if uploaded_file:
     if hasattr(model, "predict_proba"):
         try:
             y_true_bin = pd.get_dummies(
-                xgb_le.transform(y_test) if model_choice.startswith("XGBoost") else y_test
+                xgb_le.transform(y_test)
+                if model_choice.startswith("XGBoost") else y_test
             )
-            y_score = model.predict_proba(X_test)
-            auc = roc_auc_score(y_true_bin, y_score, average="macro", multi_class="ovr")
-        except Exception:
+            auc = roc_auc_score(
+                y_true_bin,
+                model.predict_proba(X_test),
+                average="macro",
+                multi_class="ovr"
+            )
+        except:
             auc = None
 
-    c1, c2, c3, c4, c5, c6 = st.columns(6)
-    c1.metric("Accuracy", f"{acc:.3f}")
-    c2.metric("Precision", f"{prec:.3f}")
-    c3.metric("Recall", f"{rec:.3f}")
-    c4.metric("F1 Score", f"{f1:.3f}")
-    c5.metric("MCC", f"{mcc:.3f}")
-    c6.metric("AUC", f"{auc:.3f}" if auc is not None else "N/A")
+    cols = st.columns(6)
+    cols[0].metric("Accuracy", f"{acc:.3f}")
+    cols[1].metric("Precision", f"{prec:.3f}")
+    cols[2].metric("Recall", f"{rec:.3f}")
+    cols[3].metric("F1 Score", f"{f1:.3f}")
+    cols[4].metric("MCC", f"{mcc:.3f}")
+    cols[5].metric("AUC (OvR)", f"{auc:.3f}" if auc else "N/A")
 
-    st.divider()
+    # =============================
+    # CONFUSION MATRIX
+    # =============================
+    st.markdown('<div class="section-title">📌 Confusion Matrix</div>', unsafe_allow_html=True)
 
-    # -----------------------------
-    # Confusion Matrix
-    # -----------------------------
-    st.subheader("📌 Confusion Matrix")
     labels = sorted(y_test.unique())
     cm = confusion_matrix(y_test, y_pred, labels=labels)
 
@@ -171,7 +299,7 @@ if uploaded_file:
         cm,
         annot=True,
         fmt="d",
-        cmap="Blues",
+        cmap="RdPu",
         xticklabels=labels,
         yticklabels=labels,
         ax=ax
@@ -180,14 +308,27 @@ if uploaded_file:
     ax.set_ylabel("Actual")
     st.pyplot(fig)
 
-    st.divider()
+    # =============================
+    # SAMPLE PREDICTIONS
+    # =============================
+    st.markdown('<div class="section-title">🔍 Sample Predictions</div>', unsafe_allow_html=True)
 
-    # -----------------------------
-    # Sample Predictions
-    # -----------------------------
-    st.subheader("🔍 Sample Predictions")
-    results_df = pd.DataFrame({
+    pred_df = pd.DataFrame({
         "Actual": y_test,
         "Predicted": y_pred
-    })
-    st.dataframe(results_df.head(10), use_container_width=True)
+    }).head(10)
+
+    def highlight_predictions(row):
+        if row["Actual"] == row["Predicted"]:
+            return ['background-color: #e6f4ea'] * len(row)   # green
+        else:
+            return ['background-color: #fde2ea'] * len(row)   # pink
+
+    st.dataframe(
+        pred_df.style.apply(highlight_predictions, axis=1)
+                .set_table_attributes('class="sample-table"'),
+        width="stretch"
+    )
+    st.caption("🟢 Correct predictions are highlighted in green, while ❌ incorrect predictions are shown in soft pink.")
+
+
