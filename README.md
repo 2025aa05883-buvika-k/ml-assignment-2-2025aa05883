@@ -72,7 +72,7 @@ AUC scores are computed using the **One-vs-Rest (OvR)** strategy with **macro-av
 
 ## 🔍 Observations on Model Performance
 
-| ML Model Name        | Observation |
+| ML Model Name        | Observation about model performance|
 |---------------------|-------------|
 | Logistic Regression | Achieved strong performance due to effective feature engineering and scaling, showing good generalization on unseen data. |
 | Decision Tree       | Performed reasonably well but showed reduced generalization compared to ensemble models. |
