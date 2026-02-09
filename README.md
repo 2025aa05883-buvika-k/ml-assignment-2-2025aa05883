@@ -31,12 +31,19 @@ The objective of this project is to predict **player engagement levels** (`High`
 - PlayerLevel  
 - AchievementsUnlocked  
 
-The dataset contains both numerical and categorical features and is suitable for **multi-class classification**. Feature engineering, encoding, scaling, and preprocessing steps were applied uniformly across all models.
+The dataset contains both numerical and categorical features and is suitable for **multi-class classification**.
+
+### Preprocessing and Feature Engineering
+- Encoding of categorical variables  
+- Scaling of numerical features where required  
+- Creation of derived features based on gameplay patterns to support improved model learning  
+
+All preprocessing and feature engineering steps were applied **consistently across all models**.
 
 ---
 
 ## 🤖 Machine Learning Models Used
-The following six classification models were implemented on the same dataset:
+The following six classification models were implemented and evaluated on the same dataset:
 
 1. Logistic Regression  
 2. Decision Tree Classifier  
@@ -59,7 +66,7 @@ The following six classification models were implemented on the same dataset:
 | XGBoost             | 0.9303 | 0.9414 | 0.9302 | 0.9223 | 0.9261 | 0.8895 |
 
 **Note:**  
-AUC scores are computed using **One-vs-Rest (OvR)** strategy with **macro-averaging** for multi-class classification.
+AUC scores are computed using the **One-vs-Rest (OvR)** strategy with **macro-averaging** for multi-class classification.
 
 ---
 
@@ -80,12 +87,17 @@ AUC scores are computed using **One-vs-Rest (OvR)** strategy with **macro-averag
 An interactive **Streamlit web application** was developed and deployed using **Streamlit Community Cloud** with the following features:
 
 - Upload CSV test dataset  
+- Downloadable sample test dataset  
 - Model selection dropdown  
-- Display of evaluation metrics  
-- Confusion matrix and classification report  
+- Display of evaluation metrics (Accuracy, Precision, Recall, F1 Score, MCC, AUC)  
+- Confusion matrix visualization  
+- Sample prediction preview  
 
-🔗 **Live Streamlit App**: https://player-engagement-level-prediction.streamlit.app/   
-🔗 **GitHub Repository**: [ml-assignment-2-2025aa05883](https://github.com/2025aa05883-buvika-k/ml-assignment-2-2025aa05883) 
+🔗 **Live Streamlit App**:  
+https://player-engagement-level-prediction.streamlit.app/
+
+🔗 **GitHub Repository**:  
+https://github.com/2025aa05883-buvika-k/ml-assignment-2-2025aa05883
 
 ---
 
@@ -94,6 +106,6 @@ An interactive **Streamlit web application** was developed and deployed using **
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
-3. Run the Streamlit app:
+3. Run the Streamlit application:
    ```bash
    streamlit run app.py
