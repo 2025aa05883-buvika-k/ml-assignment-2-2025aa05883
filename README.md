@@ -109,6 +109,6 @@ https://github.com/2025aa05883-buvika-k/ml-assignment-2-2025aa05883
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
-Run the Streamlit application:
+3. Run the Streamlit application:
    ```bash
    streamlit run app.py
