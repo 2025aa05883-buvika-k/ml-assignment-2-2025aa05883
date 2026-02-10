@@ -78,10 +78,10 @@ AUC scores are computed using the **One-vs-Rest (OvR)** strategy with **macro-av
 | ML Model Name        | Observation about model performance |
 |---------------------|-------------------------------------|
 | Logistic Regression | Achieved strong performance due to effective feature engineering and scaling, showing good generalization on unseen data. |
-| Decision Tree       | Performed reasonably well but showed reduced generalization compared to ensemble models. |
-| kNN                 | Delivered stable results but was affected by high dimensionality after feature expansion. |
-| Naive Bayes         | Fast and simple model, but lower performance due to independence assumptions not fully holding. |
-| Random Forest       | Demonstrated excellent accuracy and robustness by aggregating multiple decision trees. |
+| Decision Tree       | Performed reasonably well but showed reduced generalization compared to ensemble-based models. |
+| kNN                 | Delivered stable results; however, performance was affected by high dimensionality after feature expansion. |
+| Naive Bayes         | Fast and simple to implement, but achieved comparatively lower performance due to the independence assumption not fully holding for the dataset.|
+| Random Forest       | Demonstrated excellent accuracy and robustness by aggregating multiple decision trees, reducing overfitting. |
 | XGBoost             | Achieved the best overall performance by capturing complex non-linear feature interactions. |
 
 ---
