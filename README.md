@@ -65,8 +65,8 @@ The following six classification models were implemented and evaluated on the sa
 | Decision Tree       | 0.8529 | 0.8842 | 0.8444 | 0.8455 | 0.8449 | 0.7677 |
 | kNN                 | 0.8497 | 0.9268 | 0.8514 | 0.8401 | 0.8453 | 0.7610 |
 | Naive Bayes         | 0.7890 | 0.9177 | 0.7825 | 0.8105 | 0.7903 | 0.6828 |
-| Random Forest       | 0.9288 | 0.9431 | 0.9283 | 0.9211 | 0.9246 | 0.8872 |
-| XGBoost             | 0.9303 | 0.9414 | 0.9302 | 0.9223 | 0.9261 | 0.8895 |
+| Random Forest (Ensemble) | 0.9288 | 0.9431 | 0.9283 | 0.9211 | 0.9246 | 0.8872 |
+| XGBoost (Ensemble) | 0.9303 | 0.9414 | 0.9302 | 0.9223 | 0.9261 | 0.8895 |
 
 **Note:**  
 AUC scores are computed using the **One-vs-Rest (OvR)** strategy with **macro-averaging** for multi-class classification.
