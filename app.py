@@ -11,17 +11,16 @@ from sklearn.metrics import (
     f1_score, matthews_corrcoef, roc_auc_score
 )
 
-# =============================
+
 # PAGE CONFIG (MUST BE FIRST)
-# =============================
+
 st.set_page_config(
     page_title="Player Engagement Prediction",
     layout="wide"
 )
 
-# =============================
-# 🌸 GLOBAL PINK THEME CSS
-# =============================
+
+
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
@@ -132,19 +131,16 @@ tbody tr:nth-child(even) {
             
 <style>
 
-/* 🌸 Sample Predictions table header */
 .sample-table thead tr th {
     background-color: #e75480 !important;
     color: white !important;
     font-weight: 600 !important;
 }
 
-/* ✅ Correct prediction row */
 .correct-row {
     background-color: #e6f4ea !important;
 }
 
-/* ❌ Wrong prediction row */
 .wrong-row {
     background-color: #fde2ea !important;
 }
@@ -152,9 +148,8 @@ tbody tr:nth-child(even) {
 </style>            
 """, unsafe_allow_html=True)
 
-# =============================
+
 # LOAD MODELS
-# =============================
 xgb_bundle = joblib.load("model/xgb_model.pkl")
 xgb_model = xgb_bundle["model"]
 xgb_le = xgb_bundle["label_encoder"]
@@ -168,18 +163,15 @@ models = {
     "XGBoost (Ensemble)": xgb_model
 }
 
-# =============================
+
 # SAMPLE TEST DATA
-# =============================
 SAMPLE_TEST_PATH = "data/test.csv"
 
 @st.cache_data
 def load_sample_test_data():
     return pd.read_csv(SAMPLE_TEST_PATH)
 
-# =============================
 # HERO SECTION
-# =============================
 st.markdown("""
 <div class="hero">
     <h1>🎮 Player Engagement Prediction</h1>
@@ -187,9 +179,7 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# =============================
 # PROBLEM STATEMENT
-# =============================
 st.markdown("""
 <div class="problem-box">
 <b>Problem Statement</b><br><br>
@@ -201,9 +191,7 @@ metrics.
 </div>
 """, unsafe_allow_html=True)
 
-# =============================
 # SAMPLE DATA DOWNLOAD
-# =============================
 st.markdown('<div class="section-title">📥 Sample Test Dataset</div>', unsafe_allow_html=True)
 
 try:
@@ -217,9 +205,7 @@ try:
 except:
     st.warning("Sample test dataset not found in repository.")
 
-# =============================
 # UPLOAD DATA
-# =============================
 st.markdown('<div class="section-title">📂 Upload Test Dataset</div>', unsafe_allow_html=True)
 
 uploaded_file = st.file_uploader(
@@ -239,9 +225,7 @@ if uploaded_file:
     )
     y_test = test_data["EngagementLevel"]
 
-    # =============================
     # MODEL SELECTION
-    # =============================
     st.markdown('<div class="section-title">🤖 Model Selection</div>', unsafe_allow_html=True)
     model_choice = st.selectbox("Choose a model", list(models.keys()))
     model = models[model_choice]
@@ -251,9 +235,7 @@ if uploaded_file:
         if model_choice.startswith("XGBoost"):
             y_pred = xgb_le.inverse_transform(y_pred)
 
-    # =============================
     # METRICS
-    # =============================
     st.markdown('<div class="section-title">📊 Evaluation Metrics</div>', unsafe_allow_html=True)
 
     acc = accuracy_score(y_test, y_pred)
@@ -286,31 +268,37 @@ if uploaded_file:
     cols[4].metric("MCC", f"{mcc:.3f}")
     cols[5].metric("AUC (OvR)", f"{auc:.3f}" if auc else "N/A")
 
-    # =============================
     # CONFUSION MATRIX
-    # =============================
     st.markdown('<div class="section-title">📌 Confusion Matrix</div>', unsafe_allow_html=True)
 
     labels = sorted(y_test.unique())
     cm = confusion_matrix(y_test, y_pred, labels=labels)
 
-    fig, ax = plt.subplots(figsize=(5, 4))
+    # Compact figure size to avoid vertical scrolling
+    fig, ax = plt.subplots(figsize=(4.2, 3.6), dpi=110)
+
     sns.heatmap(
         cm,
         annot=True,
         fmt="d",
         cmap="RdPu",
+        cbar=False,
         xticklabels=labels,
         yticklabels=labels,
+        annot_kws={"size": 10},
         ax=ax
     )
-    ax.set_xlabel("Predicted")
-    ax.set_ylabel("Actual")
-    st.pyplot(fig)
 
-    # =============================
+    ax.set_xlabel("Predicted Label", fontsize=10)
+    ax.set_ylabel("True Label", fontsize=10)
+    ax.tick_params(axis="both", labelsize=9)
+
+    plt.tight_layout()
+    st.pyplot(fig, width="content")
+
+
+
     # SAMPLE PREDICTIONS
-    # =============================
     st.markdown('<div class="section-title">🔍 Sample Predictions</div>', unsafe_allow_html=True)
 
     pred_df = pd.DataFrame({
