@@ -13,7 +13,6 @@ from sklearn.metrics import (
 
 
 # PAGE CONFIG (MUST BE FIRST)
-
 st.set_page_config(
     page_title="Player Engagement Prediction",
     layout="wide"
@@ -318,5 +317,3 @@ if uploaded_file:
         width="stretch"
     )
     st.caption("🟢 Correct predictions are highlighted in green, while ❌ incorrect predictions are shown in soft pink.")
-
-
